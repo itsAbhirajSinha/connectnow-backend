@@ -40,7 +40,9 @@ app.get('/getToken', (req, res) => {
   const { roomName, participantName } = req.query;
   res.send(createToken(roomName, participantName));
 });
-
+app.get('/abhiraj',(req,res)=>{
+  return res.json({message:"testing "})
+})
 // Start the server
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
