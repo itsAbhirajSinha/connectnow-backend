@@ -16,27 +16,32 @@ const createToken = (roomName, participantName) => {
 };
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
+// Define allowed origins
 const allowedOrigins = ['https://connectnow-frontend.vercel.app'];
 
+// Configure CORS options
 const corsOptions = {
-  origin: (origin, callback) => {
+  origin: function(origin, callback) {
     if (allowedOrigins.includes(origin) || !origin) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
-  },
+  }
 };
 
+// Use CORS middleware with options
 app.use(cors(corsOptions));
 
+// Define route to generate token
 app.get('/getToken', (req, res) => {
   const { roomName, participantName } = req.query;
   res.send(createToken(roomName, participantName));
 });
 
+// Start the server
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
